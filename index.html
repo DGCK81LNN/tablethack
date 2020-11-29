@@ -4,17 +4,18 @@
 </head>
 <body>
 <h1>欢迎使用TabletHack系统！</h1>
-<h2>书签</h2>
-<div id="table" style="margin:32px 0"></div>
-<input id="input"><button onclick="location=input.value">前往</button><button onclick="var p=prompt('书签名称');if(p)bookmarks.push([p,input.value]);update()">创建书签</button>
+<fieldset><legend>标签</legend>
+<ul id="table" style="margin:32px 0"></ul>
+<p><input id="input" placeholder="https://"><button onclick="location=input.value">前往</button><input id="ninput" placeholder="书签名称"><button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button></p>
+</fieldset>
+<textarea style="width:500px;height:250px" onblur="try{let r=eval(this.value);if(r!==undefined)alert(r)}catch(e){alert(e)}" placeholder="调试框"></textarea>
 <script>
 var bookmarks = [['百度', 'https://www.baidu.com']];
 if ('soulthBookmarks' in localStorage)
 bookmarks = localStorage.soulthBookmarks.split('&').map(function (i){ return i.split('=').map(function (ii) { return decodeURIComponent(ii); }); });
-
 function update() {
 table.innerHTML = bookmarks.map(function (v, i) {
-return "<div>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"if (confirm(''))bookmarks.splice("+i+", 1),update()\">删除</button></div>";
+return "<li>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
 }).join('');
 localStorage.soulthBookmarks = bookmarks.map(function (v) { return v.map(function (vv) { return encodeURIComponent(vv); }).join('='); }).join('&');
 }
