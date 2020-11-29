@@ -8,7 +8,7 @@
 <ul id="table" style="margin:32px 0"></ul>
 <p><input id="input" placeholder="https://"><button onclick="location=input.value">前往</button><input id="ninput" placeholder="书签名称"><button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button></p>
 </fieldset>
-<textarea style="width:500px;height:250px" onblur="try{let r=eval(this.value);if(r!==undefined)alert(r)}catch(e){alert(e)}" placeholder="调试框"></textarea>
+<fieldset><legend>调试框</legend><textarea style="width:500px;height:250px" onblur="try{let r=eval(this.value);if(r!==undefined)out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea><br><textarea style="width:500px;height:250px" readonly id="out"></textarea></fieldset>
 <script>
 var bookmarks = [['百度', 'https://www.baidu.com']];
 if ('soulthBookmarks' in localStorage)
