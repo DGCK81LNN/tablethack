@@ -9,12 +9,10 @@
   <ul id="table" style="margin:32px 0"></ul>
   <p>
    <input id="input" placeholder="https://">
-   <button onclick="open(input.value,'frame')">前往</button>
+   <button onclick="myopen(input.value)">前往</button>
    <input id="ninput" placeholder="书签名称">
    <button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button>
-   <iframe style="width:100%;height:500px" name="frame"></iframe>
   </p>
-  
  </fieldset>
  <fieldset>
   <legend>调试框</legend>
@@ -24,7 +22,7 @@
  </fieldset>
  <script>
   var bookmarks = [['百度', 'https://www.baidu.com']];
-  var b = /bookmarks=([^;]+)/g.exec(document.cookie)
+  var b = /bookmarks=([^;]+)/g.exec(document.cookie);
   b = b ? b[1] : undefined;
   if (b)
    bookmarks = decodeURIComponent(b).split('&').map(function (i){
@@ -32,9 +30,15 @@
      return decodeURIComponent(ii);
     });
    });
+  function myopen(url) {
+    document.cookie = "hist=" + encodeURIComponent(url) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
+    open(url);
+  }
+  var h = /hist=([^;]+)/g.exec(document.cookie);
+  input.value = h ? h[1] : undefined;
   function update() {
    table.innerHTML = bookmarks.map(function (v, i) {
-    return "<li>"+v[0]+" <a target=\"frame\" href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
+    return "<li>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
    }).join('');
    document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(function (v) {
     return v.map(function (vv) {
