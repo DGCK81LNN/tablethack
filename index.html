@@ -1,25 +1,46 @@
 <html>
 <head>
-<meta charset="utf-8">
+ <meta charset="utf-8">
 </head>
 <body>
-<h1>欢迎使用TabletHack系统！</h1>
-<fieldset><legend>标签</legend>
-<ul id="table" style="margin:32px 0"></ul>
-<p><input id="input" placeholder="https://"><button onclick="location=input.value">前往</button><input id="ninput" placeholder="书签名称"><button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button></p>
-</fieldset>
-<fieldset><legend>调试框</legend><textarea style="width:500px;height:250px" onblur="try{let r=eval(this.value);if(r!==undefined)out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea><br><textarea style="width:500px;height:250px" readonly id="out"></textarea></fieldset>
-<script>
-var bookmarks = [['百度', 'https://www.baidu.com']];
-if ('soulthBookmarks' in localStorage)
-bookmarks = localStorage.soulthBookmarks.split('&').map(function (i){ return i.split('=').map(function (ii) { return decodeURIComponent(ii); }); });
-function update() {
-table.innerHTML = bookmarks.map(function (v, i) {
-return "<li>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
-}).join('');
-localStorage.soulthBookmarks = bookmarks.map(function (v) { return v.map(function (vv) { return encodeURIComponent(vv); }).join('='); }).join('&');
-}
-update();
-</script>
+ <h1>欢迎使用TabletHack系统！</h1>
+ <fieldset>
+  <legend>标签</legend>
+  <ul id="table" style="margin:32px 0"></ul>
+  <p>
+   <input id="input" placeholder="https://">
+   <button onclick="location=input.value">前往</button>
+   <input id="ninput" placeholder="书签名称">
+   <button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button>
+  </p>
+ </fieldset>
+ <fieldset>
+  <legend>调试框</legend>
+  <textarea style="width:500px;height:250px" onblur="try{let r=eval(this.value);if(r!==undefined)out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea>
+  <br>
+  <textarea style="width:500px;height:250px" readonly id="out"></textarea>
+ </fieldset>
+ <script>
+  var bookmarks = [['百度', 'https://www.baidu.com']];
+  var b = /bookmarks=([^;]+)/g.exec(document.cookie)
+  b = b ? b[1] : undefined;
+  if (b)
+   bookmarks = decodeURIComponent(b).split('&').map(function (i){
+    return i.split('=').map(function (ii) {
+     return decodeURIComponent(ii);
+    });
+   });
+  function update() {
+   table.innerHTML = bookmarks.map(function (v, i) {
+    return "<li>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
+   }).join('');
+   document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(function (v) {
+    return v.map(function (vv) {
+     return encodeURIComponent(vv);
+    }).join('=');
+   }).join('&')) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
+  }
+  update();
+ </script>
 </body>
 </html>
