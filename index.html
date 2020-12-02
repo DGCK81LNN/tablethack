@@ -35,7 +35,8 @@
     open(url);
   }
   var h = /hist=([^;]+)/g.exec(document.cookie);
-  input.value = h ? h[1] : "";
+  if (h)
+    input.value = decodeURIComponent(h[1]);
   function update() {
    table.innerHTML = bookmarks.map(function (v, i) {
     return "<li>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
