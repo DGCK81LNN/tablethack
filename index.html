@@ -1,24 +1,53 @@
 <html>
 <head>
  <meta charset="utf-8">
+ <style>
+h1 {
+ color: #80f;
+}
+li {
+ line-height: 200%;
+}
+a{
+ background: #c9f;
+ color: #638;
+ text-decoration: none;
+ padding: 3px;
+ border-radius: 8px;
+}
+button,
+input,
+textarea {
+ font-size: inherit;
+ border-radius: 8px;
+ padding: 3px;
+}
+fieldset {
+ border-radius: 20px;
+ background: #edf;
+}
+textarea {
+ width: calc(50% - 8px);
+ height: 250px;
+}
+ </style>
 </head>
 <body>
  <h1>欢迎使用TabletHack系统！</h1>
  <fieldset>
   <legend>书签</legend>
-  <ul id="table" style="margin:32px 0"></ul>
-  <p>
-   <input id="input" placeholder="https://">
-   <button onclick="myopen(input.value)">前往</button>
-   <input id="ninput" placeholder="书签名称">
-   <button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button>
-  </p>
+  <ul id="table"></ul>
  </fieldset>
+ <p>
+  <input id="input" placeholder="网址" value="https://">
+  <button onclick="myopen(input.value)">前往</button>
+  <input id="ninput" placeholder="书签名称">
+  <button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button>
+  </p>
  <fieldset>
   <legend>调试框</legend>
-  <textarea style="width:500px;height:250px" onblur="try{let r=eval(this.value);if(r!==undefined)out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea>
-  <br>
-  <textarea style="width:500px;height:250px" readonly id="out"></textarea>
+  <textarea onblur="try{let r=eval(this.value);if(r!==undefined)out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea>
+  <textarea readonly placeholder="返回值" id="out"></textarea>
  </fieldset>
  <script>
   var bookmarks = [['百度', 'https://www.baidu.com']];
