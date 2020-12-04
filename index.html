@@ -46,7 +46,7 @@ textarea {
   </p>
  <fieldset>
   <legend>调试框</legend>
-  <textarea onblur="try{let r=eval(this.value);if(r!==undefined)out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea>
+  <textarea onblur="try{let r=eval(this.value);out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea>
   <textarea readonly placeholder="返回值" id="out"></textarea>
  </fieldset>
  <script>
