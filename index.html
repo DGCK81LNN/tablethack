@@ -21,6 +21,7 @@
    font-size: inherit;
    border-radius: 8px;
    padding: 3px;
+   white-space: pre-wrap;
   }
   fieldset {
    border-radius: 20px;
@@ -85,7 +86,7 @@
      };
     }
     else {
-     button.appendChild(document.createTextNode('\xa0↓\xa0'));
+     button.appendChild(document.createTextNode('  ↓  '));
      button.onclick = () => {
       input.value = v[1];
       ninput.value = v[0];
