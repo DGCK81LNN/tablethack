@@ -36,7 +36,10 @@
 <body>
  <h1>欢迎使用TabletHack系统！</h1>
  <fieldset>
-  <legend>书签 <button id="editModeBtn" onclick="editMode = !editMode; update()">管理...</button></legend>
+  <legend>
+   书签
+   <button id="editModeBtn" onclick="editMode = !editMode; update()">管理...</button>
+  </legend>
   <ul id="table"></ul>
  </fieldset>
  <fieldset>
@@ -47,7 +50,11 @@
   <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]); update()">创建书签</button>
  </fieldset>
  <fieldset>
-  <legend>调试框 <button onclick="codebox.value=`bookmarks=[\n\n${bookmarks.map(v=>JSON.stringify(v)).join(',\n')}\n\n],update(),'success'`">编辑所有书签</button></legend>
+  <legend>
+   调试框
+   <button onclick="codebox.value=`bookmarks=[\n\n${bookmarks.map(v=>JSON.stringify(v)).join(',\n')}\n\n],update(),value='','success'`">编辑所有书签</button>
+   <button onclick="location.reload()">刷新TabletHack系统</button>
+  </legend>
   <textarea id="codebox" onblur="try { let r = eval(this.value); out.value = r } catch (e) { out.value=e }" placeholder="调试框"></textarea>
   <textarea readonly placeholder="返回值" id="out"></textarea>
  </fieldset>
