@@ -2,63 +2,61 @@
 <head>
  <meta charset="utf-8">
  <style>
-h1 {
- color: #80f;
-}
-li {
- line-height: 200%;
-}
-a{
- background: #c9f;
- color: #638;
- text-decoration: none;
- padding: 3px;
- border-radius: 8px;
-}
-button,
-input,
-textarea {
- font-size: inherit;
- border-radius: 8px;
- padding: 3px;
-}
-fieldset {
- border-radius: 20px;
- background: #edf;
-}
-textarea {
- width: calc(50% - 8px);
- height: 250px;
-}
+  h1 {
+   color: #80f;
+  }
+  li {
+   line-height: 200%;
+  }
+  a{
+   background: #c9f;
+   color: #638;
+   text-decoration: none;
+   padding: 3px;
+   border-radius: 8px;
+  }
+  button,
+  input,
+  textarea {
+   font-size: inherit;
+   border-radius: 8px;
+   padding: 3px;
+  }
+  fieldset {
+   border-radius: 20px;
+   background: #edf;
+  }
+  textarea {
+   width: calc(50% - 8px);
+   height: 250px;
+  }
  </style>
 </head>
 <body>
  <h1>欢迎使用TabletHack系统！</h1>
  <fieldset>
-  <legend>书签</legend>
+  <legend>书签 <button id="editModeBtn" onclick="editMode = !editMode; update()">管理...</button></legend>
   <ul id="table"></ul>
  </fieldset>
- <p>
+ <fieldset>
+  <legend>前往</legend>
   <input id="input" placeholder="网址" value="https://">
   <button onclick="myopen(input.value)">前往</button>
   <input id="ninput" placeholder="书签名称">
-  <button onclick="if(ninput.value)bookmarks.push([ninput.value,input.value]);update()">创建书签</button>
-  </p>
+  <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]); update()">创建书签</button>
+ </fieldset>
  <fieldset>
-  <legend>调试框</legend>
-  <textarea onblur="try{let r=eval(this.value);out.value=r}catch(e){out.value=e}" placeholder="调试框"></textarea>
+  <legend>调试框 <button onclick="codebox.value=`bookmarks=[\n\n${bookmarks.map(v=>JSON.stringify(v)).join(',\n')}\n\n],update(),'success'`">编辑所有书签</button></legend>
+  <textarea id="codebox" onblur="try { let r = eval(this.value); out.value = r } catch (e) { out.value=e }" placeholder="调试框"></textarea>
   <textarea readonly placeholder="返回值" id="out"></textarea>
  </fieldset>
  <script>
+  alert = prompt = confirm = () => { throw new Error('来自TabletHack系统的提示：由于浏览器限制，不能弹出对话框'); };
   var bookmarks = [['百度', 'https://www.baidu.com']];
   var b = /bookmarks=([^;]+)/g.exec(document.cookie);
   b = b ? b[1] : undefined;
   if (b)
-   bookmarks = decodeURIComponent(b).split('&').map(function (i){
-    return i.split('=').map(function (ii) {
-     return decodeURIComponent(ii);
-    });
-   });
+   bookmarks = decodeURIComponent(b).split('&').map(i => i.split('=').map(ii => decodeURIComponent(ii)));
   function myopen(url) {
     document.cookie = "hist=" + encodeURIComponent(url) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
     open(url);
@@ -67,16 +65,40 @@ textarea {
   if (h)
     input.value = decodeURIComponent(h[1]);
   function update() {
-   table.innerHTML = bookmarks.map(function (v, i) {
-    return "<li>"+v[0]+" <a href=\""+v[1]+"\">"+v[1]+"</a> <button onclick=\"bookmarks.splice("+i+", 1),update()\">删除</button></li>";
-   }).join('');
-   document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(function (v) {
-    return v.map(function (vv) {
-     return encodeURIComponent(vv);
-    }).join('=');
+   editModeBtn.firstChild.nodeValue = editMode ? '完成' : '管理...';
+   [...table.children].forEach(e => e.remove());
+   bookmarks.map((v, i) => {
+    var li = document.createElement('li');
+    li.appendChild(document.createElement('span')).innerHTML = v[0];
+    li.appendChild(document.createTextNode(' '));
+    var a = li.appendChild(document.createElement('a'));
+    a.href = v[1];
+    a.appendChild(document.createTextNode(v[1]));
+    li.appendChild(document.createTextNode(' '));
+    var button = li.appendChild(document.createElement('button'));
+    if (editMode) {
+     button.appendChild(document.createTextNode('删除'));
+     button.onclick = () => {
+      bookmarks.splice(i, 1);
+      editMode = false;
+      update();
+     };
+    }
+    else {
+     button.appendChild(document.createTextNode('\xa0↓\xa0'));
+     button.onclick = () => {
+      input.value = v[1];
+      ninput.value = v[0];
+     };
+    }
+    table.appendChild(li);
+   });
+   document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(v => {
+    return v.map(vv => encodeURIComponent(vv)).join('=');
    }).join('&')) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
   }
   update();
+  var editMode = false;
  </script>
 </body>
 </html>
