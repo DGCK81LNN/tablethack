@@ -52,7 +52,7 @@
  <fieldset>
   <legend>
    调试框
-   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.map(c=>c.replace(/[`\\]/g,'\\$0')).join(' | ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' | ').map(c=>c.trim())),update(),value='','success'`">编辑所有书签</button>
+   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.map(c=>c.replace(/([`\\])/g,'\\$1')).join(' | ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' | ').map(c=>c.trim())),update(),value='','success'`">编辑所有书签</button>
    <button onclick="location.reload()">刷新TabletHack系统</button>
   </legend>
   <textarea id="codebox" onblur="try { let r = eval(this.value); out.value = r } catch (e) { out.value=e }" placeholder="调试框"></textarea>
