@@ -52,7 +52,7 @@
  <fieldset>
   <legend>
    调试框
-   <button onclick="codebox.value=`bookmarks=[\n\n${bookmarks.map(v=>JSON.stringify(v)).join(',\n')}\n\n],update(),value='','success'`">编辑所有书签</button>
+   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.join(' \| ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' \| ').map(c=>c.trim())),update(),value='','success'`">编辑所有书签</button>
    <button onclick="location.reload()">刷新TabletHack系统</button>
   </legend>
   <textarea id="codebox" onblur="try { let r = eval(this.value); out.value = r } catch (e) { out.value=e }" placeholder="调试框"></textarea>
@@ -81,7 +81,7 @@
     li.appendChild(document.createTextNode(' '));
     var a = li.appendChild(document.createElement('a'));
     a.href = v[1];
-    a.appendChild(document.createTextNode(v[1]));
+    a.appendChild(document.createTextNode(v[1].length>42?v[1].substr(0,40)+"...":v[1]));
     li.appendChild(document.createTextNode(' '));
     var button = li.appendChild(document.createElement('button'));
     if (editMode) {
@@ -101,9 +101,9 @@
     }
     table.appendChild(li);
    });
-   document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(v => {
-    return v.map(vv => encodeURIComponent(vv)).join('=');
-   }).join('&')) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
+   document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(
+    v => v.map(vv => encodeURIComponent(vv)).join('=')).join('&')
+   ) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
   }
   update();
   var editMode = false;
