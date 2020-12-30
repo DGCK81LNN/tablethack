@@ -47,12 +47,12 @@
   <input id="input" placeholder="网址" value="https://">
   <button onclick="myopen(input.value)">前往</button>
   <input id="ninput" placeholder="书签名称">
-  <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]),update(),saveb(bookmarks)">创建书签</button>
+  <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]),update(),saveb()">创建书签</button>
  </fieldset>
  <fieldset>
   <legend>
    调试框
-   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.map(c=>c.replace(/([`\\])/g,'\\$1')).join(' | ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' | ').map(c=>c.trim())),update(),saveb(bookmarks),value='','success'`">编辑所有书签</button>
+   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.map(c=>c.replace(/([`\\])/g,'\\$1')).join(' | ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' | ').map(c=>c.trim())),update(),saveb(),value='','success'`">编辑所有书签</button>
    <button onclick="location.reload()">刷新TabletHack系统</button>
   </legend>
   <textarea id="codebox" onblur="try { let r = eval(this.value); out.value = r } catch (e) { out.value=e }" placeholder="调试框"></textarea>
@@ -74,10 +74,10 @@
   var h = /hist=([^;]+)/g.exec(document.cookie);
   if (h)
     input.value = decodeURIComponent(h[1]);
-  function update() {
+  function update(arr=bookmarks) {
    editModeBtn.firstChild.nodeValue = editMode ? '完成' : '管理...';
    [...table.children].forEach(e => e.remove());
-   bookmarks.map((v, i) => {
+   arr.map((v, i) => {
     var name = v[0] || "", url = v[1] || "";
     var li = document.createElement('li');
     li.appendChild(document.createElement('span')).innerHTML = name;
@@ -87,7 +87,7 @@
     a.appendChild(document.createTextNode(url.length>92?url.substr(0,90)+"...":url));
     li.appendChild(document.createTextNode(' '));
     var button = li.appendChild(document.createElement('button'));
-    if (editMode) {
+    if (editMode && arr === bookmarks) {
      button.appendChild(document.createTextNode('删除'));
      button.onclick = () => {
       bookmarks.splice(i, 1);
@@ -105,7 +105,7 @@
     table.appendChild(li);
    });
   }
-  function saveb(arr, key="bookmarks") {
+  function saveb(arr=bookmarks, key="bookmarks") {
   document.cookie = key + "=" + encodeURIComponent(arr.map(
     v => v.map(vv => encodeURIComponent(vv)).join('=')).join('&')
    ) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
