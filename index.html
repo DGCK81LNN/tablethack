@@ -47,7 +47,7 @@
   <input id="input" placeholder="网址" value="https://">
   <button onclick="myopen(input.value)">前往</button>
   <input id="ninput" placeholder="书签名称">
-  <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]); update()">创建书签</button>
+  <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]),update(),saveb(bookmarks)">创建书签</button>
  </fieldset>
  <fieldset>
   <legend>
@@ -60,11 +60,13 @@
  </fieldset>
  <script>
   alert = prompt = confirm = () => { throw new Error('来自TabletHack系统的提示：由于浏览器限制，不能弹出对话框'); };
-  var bookmarks = [['百度', 'https://www.baidu.com']];
-  var b = /bookmarks=([^;]+)/g.exec(document.cookie);
-  b = b ? b[1] : undefined;
-  if (b)
-   bookmarks = decodeURIComponent(b).split('&').map(i => i.split('=').map(ii => decodeURIComponent(ii)));
+  var bookmarks = loadb() || [['百度', 'https://www.baidu.com']];
+  function loadb(key="bookmarks") {
+   var b = new RegExp(key+"=([^;]+)").exec(document.cookie);
+   b = b ? b[1] : undefined;
+   if (b)
+    return decodeURIComponent(b).split('&').map(i => i.split('=').map(ii => decodeURIComponent(ii)));
+  }
   function myopen(url) {
     document.cookie = "hist=" + encodeURIComponent(url) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
     open(url);
@@ -90,7 +92,7 @@
      button.onclick = () => {
       bookmarks.splice(i, 1);
       editMode = false;
-      update();
+      update();saveb(bookmarks);
      };
     }
     else {
@@ -102,7 +104,9 @@
     }
     table.appendChild(li);
    });
-   document.cookie = "bookmarks=" + encodeURIComponent(bookmarks.map(
+  }
+  function saveb(arr, key="bookmarks") {
+  document.cookie = key + "=" + encodeURIComponent(bookmarks.map(
     v => v.map(vv => encodeURIComponent(vv)).join('=')).join('&')
    ) + "; expires=Fri Dec 31 9999 23:59:59; path=/tablethack;";
   }
