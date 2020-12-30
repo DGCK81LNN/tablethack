@@ -52,7 +52,7 @@
  <fieldset>
   <legend>
    调试框
-   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.join(' \| ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' \| ').map(c=>c.trim())),update(),value='','success'`">编辑所有书签</button>
+   <button onclick="codebox.value=`bookmarks=\`\n\n${bookmarks.map(v=>v.map(c=>c.replace(/[`\\]/g,'\\$0')).join(' | ')).join('\n\n')}\n\n\`.trim().split(/\\n+/).map(l=>l.trim().split(' | ').map(c=>c.trim())),update(),value='','success'`">编辑所有书签</button>
    <button onclick="location.reload()">刷新TabletHack系统</button>
   </legend>
   <textarea id="codebox" onblur="try { let r = eval(this.value); out.value = r } catch (e) { out.value=e }" placeholder="调试框"></textarea>
@@ -76,12 +76,13 @@
    editModeBtn.firstChild.nodeValue = editMode ? '完成' : '管理...';
    [...table.children].forEach(e => e.remove());
    bookmarks.map((v, i) => {
+    var name = v[0] || "", url = v[1] || "";
     var li = document.createElement('li');
-    li.appendChild(document.createElement('span')).innerHTML = v[0];
+    li.appendChild(document.createElement('span')).innerHTML = name;
     li.appendChild(document.createTextNode(' '));
     var a = li.appendChild(document.createElement('a'));
-    a.href = v[1];
-    a.appendChild(document.createTextNode(v[1].length>92?v[1].substr(0,90)+"...":v[1]));
+    a.href = url;
+    a.appendChild(document.createTextNode(url.length>92?url.substr(0,90)+"...":url));
     li.appendChild(document.createTextNode(' '));
     var button = li.appendChild(document.createElement('button'));
     if (editMode) {
