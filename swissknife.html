@@ -37,8 +37,8 @@ text
 out <- read
 <button onclick="file.click()">#file</button>
 as
-<button onclick="var r=new FileReader();r.onload=()=>{text.value=r.result};r.readAsText(file.files[0])">text</button>
-<button onclick="var r=new FileReader();r.onload=()=>{text.value=r.result};r.readAsDataURL(file.files[0])">data url</button>
+<button onclick="var r=new FileReader();r.onload=()=>{out.value=r.result};r.readAsText(file.files[0])">text</button>
+<button onclick="var r=new FileReader();r.onload=()=>{out.value=r.result};r.readAsDataURL(file.files[0])">data url</button>
 </div>
 <div>
 swap
