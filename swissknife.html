@@ -2,20 +2,60 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LNN's swiss-knife util</title>
 <style>button{padding:4px 8px}</style>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.58.3/codemirror.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/codemirror/5.58.3/codemirror.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/codemirror/5.58.3/mode/javascript/javascript.min.js"></script>
+<style>
+textarea { width: calc(50% - 4px); height: 300px; }
+</style>
+<script>// UTF-8 + Base64 custom implementation
+this.Base64=function(){function r(r){r=r.replace(/\r\n/g,"\n")
+for(var e="",o=0;o<r.length;o++){var n=r.charCodeAt(o)
+128>n?e+=String.fromCharCode(n):n>127&&2048>n?(e+=String.fromCharCode(n>>6|192),e+=String.fromCharCode(63&n|128)):(e+=String.fromCharCode(n>>12|224),e+=String.fromCharCode(n>>6&63|128),e+=String.fromCharCode(63&n|128))}return e}function e(r){for(var e="",o=0,n=0,a=0,t=0;o<r.length;)n=r.charCodeAt(o),128>n?(e+=String.fromCharCode(n),o++):n>191&&224>n?(a=r.charCodeAt(o+1),e+=String.fromCharCode((31&n)<<6|63&a),o+=2):(a=r.charCodeAt(o+1),t=r.charCodeAt(o+2),e+=String.fromCharCode((15&n)<<12|(63&a)<<6|63&t),o+=3)
+return e}var o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+return{[Symbol.toStringTag]:"Base64",encode:function(e){var n,a,t,C,i,f,d,h="",g=0
+for(e=r(e);g<e.length;)n=e.charCodeAt(g++),a=e.charCodeAt(g++),t=e.charCodeAt(g++),C=n>>2,i=(3&n)<<4|a>>4,f=(15&a)<<2|t>>6,d=63&t,isNaN(a)?f=d=64:isNaN(t)&&(d=64),h=h+o[C]+o[i]+o[f]+o[d]
+return h},decode:function(r){var n,a,t,C,i,f,d,h="",g=0
+for(r=r.replace(/[^A-Za-z0-9\+\/\=]/g,"");g<r.length;)C=o.indexOf(r[g++]),i=o.indexOf(r[g++]),f=o.indexOf(r[g++]),d=o.indexOf(r[g++]),n=C<<2|i>>4,a=(15&i)<<4|f>>2,t=(3&f)<<6|d,h+=String.fromCharCode(n),64!=f&&(h+=String.fromCharCode(a)),64!=d&&(h+=String.fromCharCode(t))
+return h=e(h)}}}()
+</script>
 <h1>LNN's swiss-knife util</h1>
-<textarea style="width:100%;height:300px" id="codebox" placeholder="#codebox"></textarea>
+<div id="codeDiv"></div>
 <div style="margin:8px 0">
-<button onclick="try{let __r=eval(codebox.value);if(__r!==undefined)alert(__r)}catch(e){alert(e)}">eval</button>
-<button onclick="codebox.value=`codebox.value=${JSON.stringify(codebox.value)},text.value=${JSON.stringify(text.value)},[][[]]`,text.value=''">dump</button>
-<div>utf-8 + base64 <button onclick="let a=atob(text.value),b='';for(let i=0;i<a.length;++i)b+='%'+a.charCodeAt(i).toString(16).padStart(2,'0');text.value=decodeURIComponent(b)">decode</button>
+<div>
+out <-
+<button onclick="try{let __r=eval(codebox.value);out.value=__r}catch(e){out.value=e}">eval code</button>
+<button onclick="out.value=`codebox.value=${JSON.stringify(codebox.value)},text.value=${JSON.stringify(text.value)},[][[]]`,text.value=''">dump code & text</button>
 </div>
 <div>
-read <input type="file" id="file" style="display:none">
+out <- utf-8 + base64
+<button onclick="out.value=Base64.encode(text.value)">encode</button>
+<button onclick="out.value=Base64.decode(text.value)">decode</button>
+text
+</div>
+<div>
+out <- read
 <button onclick="file.click()">#file</button>
 as
-<button onclick="var r=new FileReader();r.onload=()=>void(text.value=r.result);r.readAsText(file.files[0])">text</button>
-<button onclick="var r=new FileReader();r.onload=()=>void(text.value=r.result);r.readAsDataURL(file.files[0])">data url</button>
+<button onclick="var r=new FileReader();r.onload=()=>{text.value=r.result};r.readAsText(file.files[0])">text</button>
+<button onclick="var r=new FileReader();r.onload=()=>{text.value=r.result};r.readAsDataURL(file.files[0])">data url</button>
+</div>
+<div>
+swap
+<button onclick="[codebox.value,out.value]=[out.value,codebox.value]">code, out</button>
+<button onclick="[text.value,out.value]=[out.value,text.value]">text, out</button>
+<button onclick="[codebox.value,text.value]=[text.value,codebox.value]">code, text</button>
 </div>
 
 </div>
-<textarea style="width:100%;height:300px" id="text" placeholder="#text"></textarea>
+<textarea id="text" placeholder="#text"></textarea>
+<textarea id="out" placeholder="#out" readonly></textarea>
+<input type="file" id="file" style="display:none">
+
+<script>
+var codebox = {
+    get value() { return codeCm.getValue(); },
+    set value(v) { codeCm.setValue(v); }
+};
+var codeCm = new CodeMirror(codeDiv,{ lineNumbers: true });
+</script>
