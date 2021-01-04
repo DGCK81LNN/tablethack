@@ -47,7 +47,7 @@ return h=e(h)}}}()</script>
         <button onclick="try{let __r=eval(codebox.value);out.value=__r}catch(e){out.value=e}">
           eval code
         </button>
-        <button onclick="out.value=`codebox.value=${JSON.stringify(codebox.value)},text.value=${JSON.stringify(text.value)},[][[]]`,text.value=''">
+        <button onclick="out.value=`codebox.value=${JSON.stringify(codebox.value)},text.value=${JSON.stringify(text.value)}`">
           dump code & text
         </button>
       </div>
@@ -88,10 +88,8 @@ return h=e(h)}}}()</script>
       </div>
     </div>
     <div id="textAndOut">
-      <textarea id="text" placeholder="#text">
-      </textarea>
-      <textarea id="out" placeholder="#out" readonly>
-      </textarea>
+      <textarea id="text" placeholder="#text"></textarea>
+      <textarea id="out" placeholder="#out" readonly></textarea>
     </div>
     <input type="file" id="file" style="display:none">
     <script>
