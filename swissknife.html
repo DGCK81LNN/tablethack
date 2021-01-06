@@ -82,10 +82,10 @@ return h=e(h)}}}()</script>
         <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/&quot;/g,'&amp;quot;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
           escape &amp;&lt;&gt;"
         </button>
-        <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/'/g,'&amp;#39;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
+        <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/'/g,'&amp;apos;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
           escape &amp;&lt;&gt;'
         </button>
-        <button onclick="let e=document.createElement('div');out.value=text.value.replace(/&amp;[^&amp;\s;]+;/g,f=&gt;(e.innerHTML=f, e.textContent))">
+        <button onclick="let e=document.createElement('div');out.value=text.value.replace(/&amp;[^&amp;&lt;&gt;&quot;&apos;\s;]+;/g,f=&gt;(e.innerHTML=f, e.textContent))">
           unescape
         </button>
         text
