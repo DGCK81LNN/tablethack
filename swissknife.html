@@ -47,6 +47,9 @@ return h=e(h)}}}()</script>
         <button onclick="try{let __r=eval(codebox.value);out.value=__r}catch(e){out.value=e}">
           eval code
         </button>
+        <button onclick="var r='',d;for(d of text.value){let c=d.codePointAt(0).toString(16),m=c.length;r+=m&gt;4?`\\u{${c}}`:m===4?`\\u${c}`:m===3?`\\u0${c}`:m===2?`\\x${c}`:`\\x0${c}`}out.value=`&quot;${r}&amp;&quot;`">
+          code point escape text
+        </button>
         <button onclick="out.value=`codebox.value=${JSON.stringify(codebox.value)},text.value=${JSON.stringify(text.value)}`">
           dump code & text
         </button>
@@ -58,6 +61,32 @@ return h=e(h)}}}()</script>
         </button>
         <button onclick="out.value=Base64.decode(text.value)">
           decode
+        </button>
+        text
+      </div>
+      <div>
+        out &lt;- uri-component
+        <button onclick="out.value=encodeURIComponent(text.value)">
+          encode
+        </button>
+        <button onclick="out.value=decodeURIComponent(text.value)">
+          decode
+        </button>
+        text
+      </div>
+      <div>
+        out &lt;- html
+        <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
+          escape &amp;&lt;&gt;
+        </button>
+        <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/&quot;/g,'&amp;quot;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
+          escape &amp;&lt;&gt;"
+        </button>
+        <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/'/g,'&amp;#39;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
+          escape &amp;&lt;&gt;'
+        </button>
+        <button onclick="let e=document.createElement('div');out.value=text.value.replace(/&amp;[^&amp;\s;]+;/g,f=&gt;(e.innerHTML=f, e.textContent))">
+          unescape
         </button>
         text
       </div>
