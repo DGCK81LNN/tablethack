@@ -47,7 +47,7 @@
     </div>
     <div style="margin:8px 0">
       <div>
-        out &lt;-
+        out &larr;
         <button onclick="try{let __r=eval(codebox.value);out.value=__r}catch(e){out.value=e}">
           eval code
         </button>
@@ -59,7 +59,7 @@
         </button>
       </div>
       <div>
-        out &lt;- utf-8 + base64
+        out &larr; utf-8 + base64
         <button onclick="out.value=Base64LNN.encodeUTF8(text.value)">
           encode
         </button>
@@ -69,7 +69,7 @@
         text
       </div>
       <div>
-        out &lt;- uri-component
+        out &larr; uri-component
         <button onclick="out.value=encodeURIComponent(text.value)">
           encode
         </button>
@@ -79,7 +79,7 @@
         text
       </div>
       <div>
-        out &lt;- html
+        out &larr; html
         <button onclick="out.value=text.value.replace(/&amp;/g,'&amp;amp;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;')">
           escape &amp;&lt;&gt;
         </button>
@@ -95,7 +95,7 @@
         text
       </div>
       <div>
-        out &lt;- read
+        out &larr; read
         <button onclick="file.click()">
           #file
         </button>
