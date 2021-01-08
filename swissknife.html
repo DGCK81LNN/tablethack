@@ -93,7 +93,7 @@
         <button onclick="let s='';for(let c of text.value){let d=c.codePointAt(0);s+=d<0x80?c:c in HTML_ENTITIES_NONASCII?`&${HTML_ENTITIES_NONASCII[c]};`:`&#${d};`}out.value=s">
           encode nonascii
         </button>
-        <button onclick="let e=document.createElement(&quot;div&quot;);text.value.replace(/&amp;\w[\d\w]+;?|&amp;#\d+;?|&amp;#x[\dA-Fa-f]+;?/g,c=>(e.innerHTML=c;e.textContent))">
+        <button onclick="let e=document.createElement(&quot;div&quot;);text.value.replace(/&amp;\w[\d\w]+;?|&amp;#\d+;?|&amp;#x[\dA-Fa-f]+;?/g,c=>(e.innerHTML=c,e.textContent))">
           unescape
         </button>
         text
