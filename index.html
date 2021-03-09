@@ -32,9 +32,10 @@
    height: 250px;
   }
  </style>
+ <script src="/js/utils.js"></script>
 </head>
 <body>
- <h1>欢迎使用TabletHack系统！</h1>
+ <h1 id="h1">欢迎使用TabletHack系统！</h1>
  <fieldset>
   <legend>
    书签
@@ -59,6 +60,9 @@
   <textarea readonly placeholder="返回值" id="out"></textarea>
  </fieldset>
  <script>
+  if (typeof "getElementsLNN" === "function")
+   getElementsLNN();
+
   alert = prompt = confirm = () => { throw new Error('来自TabletHack系统的提示：由于浏览器限制，不能弹出对话框'); };
   var bookmarks = loadb() || [['百度', 'https://www.baidu.com']];
   function loadb(key="bookmarks") {
@@ -112,6 +116,25 @@
   }
   update();
   var editMode = false;
+  
+  var pingImg = new Image(), loaded = false;
+  pingImg.onload = () => {
+   loaded = true;
+   h1.textContent = "欢迎使用TabletHack系统！";
+  };
+  pingImg.onerror = () => {
+   h1.textContent = "错误：网络连接无效，请考虑返回重试";
+  };
+  setInterval(() => {
+   if (!loaded)
+    h1.textContent = "错误：网络连接超时，请考虑返回重试";
+   loaded = false;
+   reping();
+  }, 8000);
+  reping();
+  function reping() {
+   pingImg.src = "/site_icon.png?_=" + Date.now();
+  }
  </script>
 </body>
 </html>
