@@ -117,10 +117,18 @@
   update();
   var editMode = false;
   
+  var normalHeading = "欢迎使用TabletHack系统！";
+  var latestPortalVersion = "2.0.1";
+  var portalVersion = /(?:^\?|&)portalversion=([^&]*)/.exec(location.search);
+  portalVersion && (portalVersion = portalVersion[1]);
+  if (portalVersion != latestPortalVersion)
+   normalHeading = `TabletHack系统传送门有更新：${portalVersion} -> ${latestPortalVersion}`
+  h1.textContent = normalHeading;
+  
   var pingImg = new Image(), loaded = false;
   pingImg.onload = () => {
    loaded = true;
-   h1.textContent = "欢迎使用TabletHack系统！";
+   h1.textContent = normalHeading;
   };
   pingImg.onerror = () => {
    h1.textContent = "错误：网络连接无效，请考虑返回重试";
