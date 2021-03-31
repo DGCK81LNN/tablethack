@@ -5,10 +5,10 @@
   h1 {
    color: #80f;
   }
-  li {
+  #table li {
    line-height: 200%;
   }
-  a{
+  #table a{
    background: #c9f;
    color: #638;
    text-decoration: none;
@@ -36,6 +36,7 @@
 </head>
 <body>
  <h1 id="h1">欢迎使用TabletHack系统！</h1>
+ <p><a href="https://www.luogu.com.cn/paste/k8emxy5b">TabletHack系统传送门更新发布页</a></p>
  <fieldset>
   <legend>
    书签
@@ -49,7 +50,6 @@
   <button onclick="myopen(input.value)">前往</button>
   <input id="ninput" placeholder="书签名称">
   <button onclick="if (ninput.value) bookmarks.push([ninput.value, input.value]),update(),saveb()">创建书签</button>
-  <p><a href="https://www.luogu.com.cn/paste/k8emxy5b">TabletHack系统传送门更新发布页</a></p>
  </fieldset>
  <fieldset>
   <legend>
@@ -119,10 +119,10 @@
   var editMode = false;
   
   var normalHeading = "欢迎使用TabletHack系统！";
-  var latestPortalVersion = "2.0.2";
+  var latestPortalVersion = "2.0.3";
   var portalVersion = /(?:^\?|&)portalversion=([^&]*)/.exec(location.search);
   portalVersion && (portalVersion = portalVersion[1]);
-  if (portalVersion != latestPortalVersion)
+  if ([null, "2.0.1", "2.0.2"].indexOf(portalVersion) !== -1)
    normalHeading = `TabletHack系统传送门有更新：${portalVersion} -> ${latestPortalVersion}`
   h1.textContent = normalHeading;
   
