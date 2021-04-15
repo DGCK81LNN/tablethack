@@ -31,11 +31,25 @@
    width: calc(50% - 8px);
    height: 250px;
   }
+  #spinner {
+   box-sizing: border-box;
+   width: 1em;
+   height: 1em;
+   border-radius: 0.5em;
+   border: 0.33em solid currentColor;
+   border-right-color: transparent;
+   animation: spin 1s infinite linear;
+  }
+  @keyframes spin {
+   100% {
+    transform: rotate(360deg);
+   }
+  }
  </style>
  <script src="/js/utils.js"></script>
 </head>
 <body>
- <h1 id="h1">欢迎使用TabletHack系统！</h1>
+ <h1 id="h1">欢迎使用TabletHack系统！<div id="spinner"></div></h1>
  <p><a href="https://www.luogu.com.cn/paste/k8emxy5b">TabletHack系统传送门更新发布页</a></p>
  <fieldset>
   <legend>
@@ -129,6 +143,7 @@
   var pingImg = new Image(), loaded = false;
   pingImg.onload = () => {
    loaded = true;
+   spinner.hidden = true;
    h1.textContent = normalHeading;
   };
   pingImg.onerror = () => {
@@ -142,6 +157,7 @@
   }, 8000);
   reping();
   function reping() {
+   spinner.hidden = false;
    pingImg.src = "/site_icon.png?_=" + Date.now();
   }
  </script>
