@@ -31,8 +31,11 @@
    width: calc(50% - 8px);
    height: 250px;
   }
+  #h1, #spinner {
+    vertical-align: middle;
+  }
   #spinner {
-   float: right;
+   display: inline-block;
    box-sizing: border-box;
    width: 1em;
    height: 1em;
@@ -50,7 +53,7 @@
  <script src="/js/utils.js"></script>
 </head>
 <body>
- <h1><span id="h1">欢迎使用TabletHack系统！</span><div id="spinner"></div></h1>
+ <h1><span id="h1">欢迎使用TabletHack系统！</span> <div id="spinner"></div></h1>
  <p><a href="https://www.luogu.com.cn/paste/k8emxy5b">TabletHack系统传送门更新发布页</a></p>
  <fieldset>
   <legend>
@@ -148,6 +151,7 @@
    h1.textContent = normalHeading;
   };
   pingImg.onerror = () => {
+   spinner.hidden = true;
    h1.textContent = "错误：网络连接无效，请考虑返回重试";
   };
   setInterval(() => {
