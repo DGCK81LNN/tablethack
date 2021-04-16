@@ -159,7 +159,7 @@
    h1.textContent = "错误：网络连接无效，请考虑返回重试";
   };
   setInterval(() => {
-   if (!loaded)
+   if (loading)
     h1.textContent = "错误：网络连接超时，请考虑返回重试";
    reping();
   }, 8000);
