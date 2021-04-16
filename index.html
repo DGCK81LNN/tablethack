@@ -147,24 +147,25 @@
    normalHeading = `TabletHack系统传送门有更新：${portalVersion} -> ${latestPortalVersion}`
   h1.textContent = normalHeading;
   
-  var pingImg = new Image(), loaded = false;
+  var pingImg = new Image(), loading = true;
   pingImg.onload = () => {
-   loaded = true;
+   loading = false;
    spinner.hidden = true;
    h1.textContent = normalHeading;
   };
   pingImg.onerror = () => {
+   loading = false;
    spinner.hidden = true;
    h1.textContent = "错误：网络连接无效，请考虑返回重试";
   };
   setInterval(() => {
    if (!loaded)
     h1.textContent = "错误：网络连接超时，请考虑返回重试";
-   loaded = false;
    reping();
   }, 8000);
   reping();
   function reping() {
+   loading = true;
    spinner.hidden = false;
    pingImg.src = "/site_icon.png?_=" + Date.now();
   }
