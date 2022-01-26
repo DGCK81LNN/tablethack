@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "cordova-plugin-file": "^6.0.2"
+  }
+}

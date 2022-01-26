@@ -1,0 +1,344 @@
+
+    /*
+    #tbhk-app-statusbar>* {
+    border: 1px dotted magenta;
+    }*/
+
+    #tbhk {
+        font-size: 1.5rem;
+    }
+
+    #tbhk h1,
+    #tbhk h2 {
+        color: #80f;
+        margin: 0.5em 0;
+    }
+
+    #tbhk h3 {
+        color: #408;
+        margin: 0.5em 0;
+    }
+
+    #tbhk p {
+        color: #222;
+        line-height: 150%;
+    }
+
+    #tbhk .p1 {
+        color: #408;
+        font-size: 1.25em;
+    }
+
+    #tbhk .p2 {
+        color: #888;
+        font-size: 0.8em;
+    }
+
+    #tbhk samp {
+        font-family: inherit;
+        background: #eee;
+        border-radius: 5px;
+        padding: 1px;
+        margin: 1px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 1px 1px white inset;
+    }
+
+    #tbhk samp img {
+        height: 1.2em;
+        vertical-align: text-bottom;
+    }
+
+    #tbhk kbd {
+        font-family: inherit;
+        background: #eee;
+        border-radius: 5px;
+        padding: 2px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3) inset;
+    }
+
+    #tbhk button {
+        border: none;
+        outline: none;
+        background: #dde;
+        border-radius: 8px;
+        font-size: 0.9em;
+        padding: 0.5em;
+        margin: 0.1em;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3), 0 2px 2px white inset;
+    }
+
+    #tbhk button:active {
+        background-color: #ccd;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    #tbhk input {
+        border: none;
+        outline: none;
+        font-family: inherit;
+        background: #f3f3f3;
+        border-radius: 8px;
+        font-size: 0.9em;
+        padding: 0.5em;
+        margin: 0.1em;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3) inset;
+    }
+
+    #tbhk del {
+        opacity: 0.5;
+    }
+
+    #tbhk>* {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 114;
+        padding: 1em;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-wrap: break-word;
+        background: #dcf;
+    }
+
+    #tbhk>*[hidden] {
+        display: unset;
+        visibility: hidden;
+        z-index: 115;
+        opacity: 0;
+        transition: visibility 0s 0.5s, opacity 0.5s;
+    }
+
+    #tbhk-saveggb {
+        height: unset;
+        top: unset;
+        bottom: 0;
+    }
+
+    /* HACK: 通过使用2个id选择器来覆盖`#tbhk>*[hidden] { display: unset }`这条规则 */
+    #tbhk #tbhk-homepage {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        white-space: no-wrap;
+        background: radial-gradient(#caf, white 80%);
+        animation: scale 6s infinite;
+        -webkit-animation: scale 6s infinite;
+        background-position: 50% 50%;
+        overflow-y: hidden;
+    }
+
+    @keyframes scale {
+        0% {
+            background-size: 100% 100%
+        }
+
+        50% {
+            background-size: 200% 200%
+        }
+
+        100% {
+            background-size: 100% 100%
+        }
+    }
+
+    @-webkit-keyframes scale {
+        0% {
+            background-size: 100% 100%
+        }
+
+        50% {
+            background-size: 200% 200%
+        }
+
+        100% {
+            background-size: 100% 100%
+        }
+    }
+
+    #tbhk-homepage>div {
+        width: 100%;
+        margin: auto;
+        text-align: center;
+    }
+
+    #tbhk-homepage h1 {
+        font-size: 4em;
+    }
+
+    #tbhk-homepage p {
+        color: white;
+    }
+
+    #tbhk-homepage h1,
+    #tbhk-homepage p {
+        text-shadow: 0 0 0.125em white;
+    }
+
+    #tbhk>*[id^=tbhk-guide-] {
+        text-align: center;
+    }
+
+    #tbhk>*[id^=tbhk-guide-] button {
+        font-size: 1.15em;
+    }
+
+    #tbhk-app {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #tbhk-app>* {
+        margin: 0.3em 0;
+    }
+
+    #tbhk-app-header {
+        display: flex;
+        align-items: center;
+    }
+
+    #tbhk-app-header>* {
+        margin: 0 0.25em;
+    }
+
+    #tbhk-app-header>h1 {
+        margin: 0;
+    }
+
+    #tbhk-app-header-freespace {
+        flex: 1;
+    }
+
+    #tbhk-app-spinner {
+        font-size: 0.8em;
+        display: inline-block;
+        margin: 0.1em;
+        box-sizing: border-box;
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+        box-sizing: border-box;
+        border-radius: 0.5em;
+        border: 0.15em solid #80f;
+        border-right-color: transparent;
+        animation: spin 1s infinite linear;
+        -webkit-animation: spin 1s infinite linear;
+        transition: width 0.5s, height 0.5s, visibility 0s;
+    }
+
+    #tbhk-app-spinner[hidden] {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        transition: width 0.5s, height 0.5s, visibility 0s 0.25s;
+        animation-play-state: paused;
+        -webkit-animation-play-state: paused;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: none;
+        }
+
+        100% {
+            transform: rotate(1turn);
+        }
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            transform: none;
+        }
+
+        100% {
+            transform: rotate(1turn);
+        }
+    }
+
+    #tbhk-app-timeandstat {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+    }
+
+    #tbhk-app-meters {
+        display: flex;
+        flex-direction: column;
+        height: 2.4em;
+        justify-content: space-between;
+    }
+
+    #tbhk-app-meters>div {
+        margin: 0.1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 8em;
+        border-radius: 1.2em;
+        color: #95f;
+        background-image: linear-gradient(to right, #caf 50%, currentColor 50%);
+        background-size: 200%;
+        text-align: center;
+        transition: background-position 1s ease-out, color 0.5s;
+    }
+
+    #tbhk-app-meters>div>span {
+        font-size: 0.8em;
+        font-weight: normal;
+        color: #dcf;
+    }
+
+    #tbhk-app-footsteps {
+        flex: 1;
+        display: flex;
+    }
+
+    #tbhk-app-footsteps>* {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+
+    #tbhk-app-footsteps>:first-child {
+        margin-right: 0.3em;
+    }
+
+    #tbhk-app-footsteps>:last-child {
+        margin-left: 0.3em;
+    }
+
+    #tbhk-app-footsteps h3 {
+        margin: 0;
+    }
+
+    #tbhk-app-footsteps ul {
+        flex: 1;
+        overflow-y: auto;
+        margin: 0.5em 0 0;
+        padding: 0.5em 0.5em 0.5em 1.5em;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3) inset;
+        overflow-wrap: break-word;
+    }
+
+    #tbhk-app-footsteps li {
+        margin-bottom: 0.3em;
+    }
+
+    #tbhk-app-statusbar {
+        display: flex;
+        align-items: middle;
+    }
+
+    #tbhk-app-statusbar>h3 {
+        margin: auto 0.3em auto 0;
+    }
+
+    #tbhk-app-tips {
+        flex: 1;
+        overflow-wrap: break-word;
+    }
